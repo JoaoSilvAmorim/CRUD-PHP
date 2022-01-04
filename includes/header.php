@@ -16,7 +16,7 @@
     <div class="container">
 
       <div class="jumbotron bg-danger">
-        <h1>DEV VAgas</h1>
+        <h1>DEV Vagas</h1>
         <p>CRUD com PHP PDO</p>
       </div>
 

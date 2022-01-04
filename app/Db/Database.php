@@ -42,18 +42,34 @@ class Database{
     }
 
     public function insert($values){
-        //DADOS DA QUERY
         $fields = array_keys($values);
         $binds  = array_pad([],count($fields),'?');
-    
-        //MONTA A QUERY
         $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
-    
-        //EXECUTA O INSERT
         $this->execute($query,array_values($values));
     
-        //RETORNA O ID INSERIDO
         return $this->connection->lastInsertId();
+    }
+
+    public function select($where = null, $order = null, $limit = null){
+      $where = strlen($where) ? 'WHERE ' .$where : '';
+      $order = strlen($order) ? 'ORDER BY ' .$order : '';
+      $limit = strlen($limit) ? 'LIMIT ' .$limit : '';
+      $query = 'SELECT * FROM ' .$this->table. ' ' .$where. ' ' .$order. ' ' .$limit;
+
+      return $this->execute($query);
+    }
+
+    public function update($where, $values){
+      $fields = array_keys($keys);
+      $query = 'UPDATE '.$this->table.' SET '.implode('=?,',$fields).'=? WHERE '.$where; 
+      $this->execute($query,array_values($values));
+      return true;
+    }
+
+    public function delete($id){
+      $query = 'DELETE FROM '.$this->table. ' ' .$id;
+      $this->execute($query);
+      return true;
     }
 
 
